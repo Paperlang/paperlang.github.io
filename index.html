@@ -1,11 +1,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paper Toy</title>
+
+    <link href="main.css" rel="stylesheet"/>
 </head>
 <body>
+
+    <div class="heading"><img src="cardback.png" width="64px"></img><p class="title">Paper Toy</p><img src="cardback.png"width="64px"></img></div>
+
+    <p class="description">
+        Build paper prototypes and play them over the network.
+    </p>
+    
+    <div style="height: 50px"></div>
+
+    <div class="example">
+        <img src="screenshot.png" height="700"></img>
+        <div class="codecont">
+            <p class="gamecode">
+                # this game is an implementation of Snap, but with ships
+                # from Eve Online
+
+                # it's a lot bigger than it has to be
+
+                game TestGame start
+
+                &emsp;# a visible stack
+                &emsp;visiblestack InPlay
+                &emsp;
+                &emsp;# a hidden stack
+                &emsp;hiddenstack Draw
+
+                &emsp;# number of players&emsp;
+                &emsp;players 2
+                &emsp;
+                &emsp;card Ship start
+                &emsp;&emsp;int shield
+                &emsp;&emsp;int armour
+                &emsp;&emsp;int hull
+                &emsp;&emsp;int attack
+                &emsp;end
+
+                &emsp;# child cards
+                &emsp;card Atron Ship start
+                &emsp;&emsp;shield = 300 + 1
+                &emsp;&emsp;armour = 350 * 2 - 1
+                &emsp;&emsp;hull = 400 + 2 * 3
+                &emsp;&emsp;attack = 50 + 60 * 6 - 5 / 4
+                &emsp;end
+                &emsp;
+                &emsp;# you dont have to set the attributes
+                &emsp;card Kestral Ship start end
+                &emsp;card Rifter Ship start end
+                &emsp;card Apocolypse Ship start end
+                &emsp;card Comet Ship start end
+
+                &emsp;# move random Ship cards into a stack
+                &emsp;random Ship -> Draw top 100
+
+                &emsp;# move cards between stacks
+                &emsp;Draw -> InPlay top 2
+
+                &emsp;# a setup block, run once at the beggining of the game
+                &emsp;setup start
+                &emsp;&emsp;foreachplayer p start
+                &emsp;&emsp;&emsp;privatestack p.Hand
+                &emsp;&emsp;&emsp;p.Hand.ownerID = p
+                &emsp;&emsp;&emsp;
+                &emsp;&emsp;&emsp;random Ship -> Draw top 10
+                &emsp;&emsp;&emsp;Draw ->_ p.Hand bottom 3
+                &emsp;&emsp;end
+                &emsp;end
+
+                &emsp;# a phase declaration, like a function
+                &emsp;phase DrawPhase start
+                &emsp;&emsp;Draw -> currentPlayer.Hand top 1
+                &emsp;end
+
+                &emsp;phase Place start
+                &emsp;&emsp;# currentPlayer is set while a turn is executing
+                &emsp;&emsp;# random Ship -> InPlay top 1
+                &emsp;&emsp;currentPlayer.Hand -> InPlay top 1
+
+                &emsp;&emsp;# compare cards from positions in stacks
+                &emsp;&emsp;if InPlay.top == InPlay.top-1 start
+                &emsp;&emsp;&emsp;# declare a wiener
+                &emsp;&emsp;&emsp;winneris currentPlayer
+                &emsp;&emsp;end
+                &emsp;end
+
+                &emsp;# runs every turn
+                &emsp;turn start
+                &emsp;&emsp;# run a phase
+                &emsp;&emsp;do DrawPhase
+                &emsp;&emsp;do Place
+                &emsp;end
+                end
+            </p>
+        </div>
+    </div>
 
 </body>
 </html>
