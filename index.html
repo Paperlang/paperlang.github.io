@@ -3,9 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Paper Toy</title>
 
+    <title>Paper Toy</title>
+    <link rel="icon" href="cardback.png" type="image/x-icon"/>
     <link href="main.css" rel="stylesheet"/>
+
 </head>
 <body>
 
@@ -14,27 +16,31 @@
     <p class="description">
         Build paper prototypes and play them over the network.
     </p>
-    
-    <div style="height: 50px"></div>
+
+    <p class="description2">
+        <span class="highlightspan">This project is in development and unreleased.</span> The language interpreter is open source and is available <a href="https://github.com/lilrooness/battler"><span class="linkspan">here</span></a>. Follow the instructions in the readme to build it. To use it in your own project, you can either include it directly (as a subdirectory if you're using CMake) or you can use it as a shared library with the <a href="https://raw.githubusercontent.com/lilrooness/battler/refs/heads/master/Paper.h"><span class="linkspan">paper.h</span></a> header file.
+    </p>
+
+    <p class="subheading">Screenshot & Example Code</p>
 
     <div class="example">
-        <img src="screenshot.png" height="700"></img>
+        <img class="screenshot" src="screenshot.png"></img>
         <div class="codecont">
             <p class="gamecode">
+                <span class="codecomment"># Example Game
                 # this game is an implementation of Snap, but with ships
                 # from Eve Online
-
-                # it's a lot bigger than it has to be
+                # it's a lot bigger than it has to be </span>
 
                 game TestGame start
 
-                &emsp;# a visible stack
+                &emsp;<span class="codecomment"># a visible stack</span>
                 &emsp;visiblestack InPlay
                 &emsp;
-                &emsp;# a hidden stack
+                &emsp;<span class="codecomment"># a hidden stack</span>
                 &emsp;hiddenstack Draw
 
-                &emsp;# number of players&emsp;
+                &emsp;<span class="codecomment"># number of players</span>
                 &emsp;players 2
                 &emsp;
                 &emsp;card Ship start
@@ -44,7 +50,7 @@
                 &emsp;&emsp;int attack
                 &emsp;end
 
-                &emsp;# child cards
+                &emsp;<span class="codecomment"># child cards</span>
                 &emsp;card Atron Ship start
                 &emsp;&emsp;shield = 300 + 1
                 &emsp;&emsp;armour = 350 * 2 - 1
@@ -52,19 +58,19 @@
                 &emsp;&emsp;attack = 50 + 60 * 6 - 5 / 4
                 &emsp;end
                 &emsp;
-                &emsp;# you dont have to set the attributes
+                &emsp;<span class="codecomment"># you dont have to set the attributes</span>
                 &emsp;card Kestral Ship start end
                 &emsp;card Rifter Ship start end
                 &emsp;card Apocolypse Ship start end
                 &emsp;card Comet Ship start end
 
-                &emsp;# move random Ship cards into a stack
+                &emsp;<span class="codecomment"># move random Ship cards into a stack</span>
                 &emsp;random Ship -> Draw top 100
 
-                &emsp;# move cards between stacks
+                &emsp;<span class="codecomment"># move cards between stacks</span>
                 &emsp;Draw -> InPlay top 2
 
-                &emsp;# a setup block, run once at the beggining of the game
+                &emsp;<span class="codecomment"># a setup block, run once at the beggining of the game</span>
                 &emsp;setup start
                 &emsp;&emsp;foreachplayer p start
                 &emsp;&emsp;&emsp;privatestack p.Hand
@@ -75,26 +81,25 @@
                 &emsp;&emsp;end
                 &emsp;end
 
-                &emsp;# a phase declaration, like a function
+                &emsp;<span class="codecomment"># a phase declaration, like a function</span>
                 &emsp;phase DrawPhase start
                 &emsp;&emsp;Draw -> currentPlayer.Hand top 1
                 &emsp;end
 
                 &emsp;phase Place start
-                &emsp;&emsp;# currentPlayer is set while a turn is executing
-                &emsp;&emsp;# random Ship -> InPlay top 1
+                &emsp;&emsp;<span class="codecomment"># currentPlayer is set while a turn is executing</span>
                 &emsp;&emsp;currentPlayer.Hand -> InPlay top 1
 
-                &emsp;&emsp;# compare cards from positions in stacks
+                &emsp;&emsp;<span class="codecomment"># compare cards from positions in stacks</span>
                 &emsp;&emsp;if InPlay.top == InPlay.top-1 start
-                &emsp;&emsp;&emsp;# declare a wiener
+                &emsp;&emsp;&emsp;<span class="codecomment"># declare a winner</span>
                 &emsp;&emsp;&emsp;winneris currentPlayer
                 &emsp;&emsp;end
                 &emsp;end
 
-                &emsp;# runs every turn
+                &emsp;<span class="codecomment"># runs every turn</span>
                 &emsp;turn start
-                &emsp;&emsp;# run a phase
+                &emsp;&emsp;<span class="codecomment"># run a phase</span>
                 &emsp;&emsp;do DrawPhase
                 &emsp;&emsp;do Place
                 &emsp;end
@@ -102,6 +107,7 @@
             </p>
         </div>
     </div>
+
 
 </body>
 </html>
